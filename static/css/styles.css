@@ -23,15 +23,11 @@ body {
     width: 80%;
     min-width: 920px;
     max-width: 1000px;
-
     margin: 3rem 0rem;
-
     border-radius: 5px;
-
     display: flex;
     align-items: center;
     flex-direction: column;
-
     color: rgb(43, 50, 55);
 }
 
@@ -54,33 +50,22 @@ body {
     font-size: 1.2rem;
     background: rgb(213, 213, 213);
     color: rgb(92, 92, 92);
-    /* color: rgb(57, 67, 76); */
     cursor: pointer;
 }
 .main-nav .option.filter {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
-    /* border-bottom-right-radius: 3px;
-    border-top-right-radius: 3px; */
-    /* box-shadow: inset -7px 0px 5px -5px rgba(72, 72, 72, 0.7); */
 }
 .main-nav .option.merge {
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
-    /* border-bottom-left-radius: 3px; */
-    /* border-top-left-radius: 10px; */
-    /* box-shadow: inset 7px 0px 5px -5px rgba(72, 72, 72, 0.7);
-    box-shadow: inset 2px 0px 5px -5px rgba(72, 72, 72, 0.7); */
 }
 .main-nav .option.active {
-    /* padding-top: 1rem; */
     box-shadow: none;
     color: inherit;
     background: white;
     cursor: initial;
     font-weight: 600;
-
-    /* font-size: 3rem; */
 }
 .main-nav .option.filter.active {
     border-bottom-right-radius: none;
@@ -94,10 +79,8 @@ body {
 .option-title {
     text-align: center;
     display: none;
-    /* margin-bottom: 1rem; */
     height: 2rem;
     font-size: 1rem;
-    /* font-weight: bold; */
     margin-bottom: 0.8rem;
 }
 .option-title.active{
@@ -115,28 +98,14 @@ body {
     background: white;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-    /* border-top-left-radius: 5px; */
     border-top-right-radius: 3px;
-    /* box-shadow: 0px 0px 7px 0px rgba(46, 46, 46, 0.7); */
-    /* box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.5); */
 }
-
-
-
-
-
-
 
 .sub-nav {
     width: 50%;
-    /* background: blue; */
     margin-right: auto;
     display: flex;
     border-radius: inherit;
-    /* border-top-right-radius: inherit;
-    border-top-left-radius: inherit; */
-    /* position: absolute; */
-    /* z-index: 2; */
     display: none;
     background: rgb(140, 140, 140);
 
@@ -145,7 +114,6 @@ body {
     width: 100%;
     height: 35px;
     display: none;
-    /* margin-bottom: 2rem; */
 }
 .sub-nav.active {
     display: flex;
@@ -153,35 +121,25 @@ body {
 .sub-nav-replacer.active {
     display: block;
 }
-/* .main-nav .seperator */
 .sub-nav .option {
     padding: 0px 18px;
     text-align: center;
-    /* font-weight: 600; */
     display: flex;
     justify-content: center;
     align-items: center;
     width: 50%;
-    /* width: min-content; */
     height: 35px;
     font-size: 1.1rem;
-    /* font-weight: 600; */
     background: rgb(213, 213, 213);
     color: rgb(92, 92, 92);
-    /* color: rgb(57, 67, 76); */
     cursor: pointer;
 }
 .sub-nav .option.single {
-    /* border-top-right-radius: 5px; */
     border-top-left-radius: 3px;
     border-bottom-right-radius: 3px;
-    /* border-bottom-left-radius: 5px; */
-    /* box-shadow: inset -6px -5px 5px -4px rgba(72, 72, 72, 0.7); */
     box-shadow: inset -2px -2px 5px -2px rgba(72, 72, 72, 0.7);
 }
 .sub-nav .option.multiple {
-    /* border-top-left-radius: 5px; */
-    /* border-bottom-right-radius: 5px; */
     border-top-right-radius: 3px;
     border-bottom-left-radius: 3px;
     box-shadow: inset 2px -2px 5px -2px rgba(72, 72, 72, 0.7);
@@ -196,18 +154,11 @@ body {
 }
 .sub-nav .option.active {
     font-weight: 600;
-    /* padding-top: 1rem; */
     box-shadow: none;
     color: inherit;
     background: white;
     cursor: initial;
-    /* font-size: 3rem; */
 }
-
-
-
-
-
 
 .btns-container {
     margin-bottom: 1rem;
@@ -216,23 +167,11 @@ body {
     align-items: center;
 }
 .btns-container .btn {
-    /* margin: 1rem; */
     display: none;
-    /* font-size: 13px; */
 }
 .btns-container .btn.active {
     display: block;
 }
-/* #compareInvByFileBtn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-#compareInvByFileBtn > * {
-    padding: 3px;
-} */
-
 
 .file-inputs-container {
     margin: 1rem 0rem 1.5rem 0rem;
@@ -240,9 +179,6 @@ body {
     flex-direction: row;
     align-items: center;
     gap: 40px;
-
-    /* background: #1d7f68; */
-    /* #3b9f88 */
 }
 .file-inputs-container label {
     width: 250px;
@@ -253,7 +189,7 @@ body {
     align-items: center;
     padding: 15px 10px 30px 10px;
     /* background: linear-gradient(180deg, rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(237, 237, 237), rgb(200, 200, 200)); */
-    background: white;
+    background: none;
     border-radius: 15px;
     border: 1px solid rgb(240, 240, 240);
     border-top-color: rgb(225, 225, 225);
@@ -264,18 +200,15 @@ body {
     position: relative;
     transition: all 0.1s ease-out;
     overflow: hidden;
-    /* overflow: visible; */
     box-shadow: 0px 6px 10px -6px rgba(0, 0, 0, 0.5);
 }
 .file-inputs-container label:hover,
-.file-inputs-container label:active,
 .file-inputs-container label:focus {
-    /* background: white; */
     border-color:rgb(191, 191, 191);
-    /* box-shadow: inset 0px 0px 15px -10px rgb(0, 0, 0); */
 }
 .file-inputs-container label:active {
-    box-shadow: inset 0px 6px 13px -6px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0px 4px 13px -6px rgba(0, 0, 0, 0.5);
+    border-color: white;
 }
 .file-inputs-container label .info {
     color: rgb(147, 147, 147);
@@ -315,57 +248,48 @@ body {
     100% { bottom: 20px; opacity: 1;}
 } */
 @keyframes bounce2 {
-    0% {bottom: -45px; height: 0px;}
-    45% {bottom: 0px; height: 30px;}
-    70% {bottom: 0px; height: 25px;}
-    80% {bottom: 0px; height: 20px;}
-    100% {bottom: 0px; height: 20px;}
+    0% {bottom: -45px; height: 0px; opacity: 1;}
+    40% {color: transparent;}
+    60% {bottom: 0px; height: 30px;}
+    100% {bottom: 0px; height: 20px; opacity: 1;}
 }
 .file-inputs-container label .file-name-field-1,
 .file-inputs-container label .file-name-field-2 {
     overflow: hidden;
     text-align: center;
     font-size: 0.9rem;
-    border-top:1px solid #2f7f6d;
+    border-top:1px solid rgba(47, 127, 110, 0.5);
     position: absolute;
     bottom: 0px;
-    /* z-index: 1; */
-    /* background: rgb(250, 250, 250); */
-    background: white;
-    /* max-height: 22px; */
+    background: rgba(47, 127, 109, 0.15);
+    color: black;
     height: 20px;
-    /* min-width: 100px;
-    max-width: 100%; */
     width: 100%;
-    /* border-radius: 3px; */
     padding: 0px 8px 1px 8px;
-    opacity: 1;
+    opacity: 0;
     animation-name: bounce2;
-    animation-duration: 0.8s;
+    animation-duration: 0.6s;
     animation-iteration-count: 1;
     animation-direction: normal;
-    animation-timing-function: ease-out;
+    animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
-    animation-delay: 0.3s;
+    animation-delay: 0.2s;
     animation-play-state: paused;
-
-    transition: background 0.1s ease-out;
+    transition: all 0.1s ease-out;
 }
-/* .file-inputs-container label .file-name-field-1.run-animation,
-.file-inputs-container label .file-name-field-2.run-animation {
-    animation-play-state: running;
-    animation-name: dropdown-bounce;
-} */
 .file-inputs-container label:hover .file-name-field-1,
 .file-inputs-container label:hover .file-name-field-2 {
-    /* height: 20px;
-    bottom: 0px; */
+    border-color: #2f7f6d;
     background: #2f7f6d;
     color: white;
 }
+/* .file-inputs-container label:active .file-name-field-1,
+.file-inputs-container label:active .file-name-field-2 {
+    background: initial;
+    color: inherit;
+} */
 
 .file-inputs-container input {
-    /* margin-bottom: 1.5rem; */
     opacity: 0;
     position:absolute;
     z-index: -1;
@@ -383,21 +307,14 @@ body {
     padding: 9px 20px;
     word-spacing: 3px;
     background: linear-gradient(180deg, rgb(59, 159, 136), rgb(59, 159, 136), rgb(47, 127, 109));
-    /* border: 1px solid rgb(196, 201, 200); */
     border: none;
-    /* border-width: 1px; */
     border-radius: 5px;
-    /* letter-spacing: 0.5px; */
-    /* transition: color 0.1s ease-out, background-color 0.1s ease-out, border-color 0.1s ease-out; */
-    box-shadow: 0px 5px 13px -7px rgb(0, 0, 0);
+    box-shadow: 0px 5px 13px -9px rgb(0, 0, 0);
+    cursor: pointer;
 }
 .btn:hover {
-    /* background: rgb(37, 131, 111); */
     background: linear-gradient(180deg, rgb(53, 143, 122), rgb(53, 143, 122), rgb(41, 111, 95));
-    cursor: pointer;
-    /* border-color: rgb(37, 131, 111); */
 }
 .btn:active {
-    /* background: rgb(18, 107, 88); */
-    box-shadow: inset 0px 6px 13px -7px rgb(0, 0, 0);
+    box-shadow: inset 0px 6px 13px -9px rgb(0, 0, 0);
 }
