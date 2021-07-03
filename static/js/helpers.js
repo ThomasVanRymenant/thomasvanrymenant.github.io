@@ -1,4 +1,11 @@
-import * as utils from './utils.js';
+// import {getQuantityDatePairs, clearInvalidQuantityCells, guessLocation, formatDate, convertExcelToArrayOfObjects, XLSXisAvailable, extractArticleObjects} from './utils.js';
+import {
+    getQuantityDatePairs, 
+    clearInvalidQuantityCells, 
+    guessLocation, 
+    convertExcelToArrayOfObjects, 
+    extractArticleObjects
+} from './utils.js';
 
 
 //---------------------------------------------------------------------------------------------------------
@@ -7,23 +14,27 @@ import * as utils from './utils.js';
 
 // switch the active nav option (!!! currently only designed to handle 2 options !!!)
 export function switchActiveNavOption() {
+
     document.querySelectorAll('.option').forEach((el) => {
         el.classList.contains('active') ? el.classList.remove('active') : el.classList.add('active')
-    })
+    });
     document.querySelectorAll('.option-title').forEach((el) => {
         el.classList.contains('active') ? el.classList.remove('active') : el.classList.add('active')
-    })
+    });
+
 };
 
 // switch the action button that is being showed
 export function switchActiveButton(newActiveBtn) {
+
     document.querySelector('.btns-container').querySelectorAll('.btn').forEach((el) => {
         if (el.classList.contains('active')) {
             el.classList.remove('active');
         }
-    })
+    });
     newActiveBtn.classList.add('active');
-}
+
+};
 
 //-------------------------------------------------------------------------------------------------------
 //------------------- helper functions used in navigation-related event-callbacks ------------------- END 
@@ -35,23 +46,25 @@ export function switchActiveButton(newActiveBtn) {
 //------------------- helper functions used for working with excel-files ------------------- START
 //------------------------------------------------------------------------------------------------
 
-// function filterMismatchesManually(inventToCheck, supposedInvent) {
-    
+// yet to implement
+// function checkMismatchManually(inventToCheck, supposedInvent) {
 // }
 
-// 
-export async function generateFileWithMismatchingInv(file1, file2) {
+// function that returns a (sparse) array of article-objects that represent each article's mismatch 
+// and it's non-identical (hence mismatching) represenation in the second inputted file
+export async function extractMismatchesFromFiles(file1, file2) {
 
     // initialise an array to store all the mismatching inventories in
-    const mismatchingRows = [];
+    const rowsToOutput = [];
 
     let maxBatchesFound = 0; // tracker for the -most amount of batches- found in any of the articles
+    let colWidths = {};
 
-    // converteer elke file naar een array van objects (excel-rows)
-    const invCounted = await utils.convertExcelToArrayOfObjects(file1);
+    // convert every file to an array of objects (excel-rows)
+    const invCounted = await convertExcelToArrayOfObjects(file1);
     const L1 = invCounted.length;
-    const rowObjects2 = await utils.convertExcelToArrayOfObjects(file2);
-    const invSupposed = await utils.extractArticleObjects(rowObjects2);
+    const rowObjects2 = await convertExcelToArrayOfObjects(file2);
+    const invSupposed = await extractArticleObjects(rowObjects2);
     const L2 = invSupposed.length;
 
     // iterate over counted inventory
@@ -70,11 +83,11 @@ export async function generateFileWithMismatchingInv(file1, file2) {
 
                 let isMismatch = false;
 
+                clearInvalidQuantityCells(invCounted[i]); // get rid of any unneeded '/' in a cell
 
-                utils.clearInvalidQuantityCells(invCounted[i]);
                 // get article2 quantity/date pairs
-                const pairs1 = utils.getQuantityDatePairs(invCounted[i]);
-                const pairs2 = utils.getQuantityDatePairs(invSupposed[j]);
+                const pairs1 = getQuantityDatePairs(invCounted[i]);
+                const pairs2 = getQuantityDatePairs(invSupposed[j]);
 
                 // update maxBatchesFound if necessary
                 if (pairs1.length > maxBatchesFound) maxBatchesFound = pairs1.length;
@@ -93,6 +106,7 @@ export async function generateFileWithMismatchingInv(file1, file2) {
                     if (b[1] == '/') return 0
 
                     let aArr = a[1].split('-'), bArr = b[1].split('-');
+
                     return new Date(aArr[2], aArr[1], aArr[0]) > new Date(bArr[2], bArr[1], bArr[0])
                 });
                 // sort pairs2 by date
@@ -103,78 +117,113 @@ export async function generateFileWithMismatchingInv(file1, file2) {
                     if (b[1] == '/') return 0
 
                     let aArr = a[1].split('-'), bArr = b[1].split('-');
+
                     return new Date(aArr[2], aArr[1], aArr[0]) > new Date(bArr[2], bArr[1], bArr[0])
                 });
 
                 // if quantity/date pairs DON'T match, add article and it's representative to newRows
                 if (pairs1.length === pairs2.length) {
+
                     for (let pairNr = 0; pairNr < pairs1.length; pairNr++) {
                         if (pairs1[pairNr][0] != pairs2[pairNr][0] || pairs1[pairNr][1] != pairs2[pairNr][1]) {
                             isMismatch = true;
                             break;
                         }
                     }
+
                 } else {
                     isMismatch = true;
                 }
 
                 // store mismatching inventory (to output them in a file later on)
                 if (isMismatch) {
+
+
                     // create extra key that will be placed in the respective column (provided by us) automatically
                     invCounted[i]['Inv. volgens'] = 'Warehouse';
                     invSupposed[j]['Inv. volgens'] = 'Database';
-                    // mismatchingRows.push(invCounted[i], invSupposed[j], new Object({' ': ' '}));
-                    mismatchingRows.push(invCounted[i], invSupposed[j], new Object());
+                    rowsToOutput.push(invCounted[i], invSupposed[j], new Object());
+
+                    // update colWidths when needed
+                    let objectEntries1 = Object.entries(invCounted[i]);
+                    let objectEntries2 = Object.entries(invSupposed[j]);
+                    const MINWIDTH = 6;
+                    for (let k = 0; k < objectEntries1.length; k++) {
+                        if (objectEntries1[k][0] in colWidths) {
+                            if (colWidths[objectEntries1[k][0]] < objectEntries1[k][1].toString().length) {
+                                colWidths[objectEntries1[k][0]] = objectEntries1[k][1].toString().length;
+                            }
+                        } else {
+                            colWidths[objectEntries1[k][0]] = objectEntries1[k][1].toString().length < MINWIDTH ? MINWIDTH : objectEntries1[k][1].toString().length;
+                        }
+                    }
+                    for (let k = 0; k < objectEntries2.length; k++) {
+                        if (objectEntries2[k][0] in colWidths) {
+                            if (colWidths[objectEntries2[k][0]] < objectEntries2[k][1].toString().length) {
+                                colWidths[objectEntries2[k][0]] = objectEntries2[k][1].toString().length;
+                            }
+                        } else {
+                            colWidths[objectEntries2[k][0]] = objectEntries2[k][1].toString().length < MINWIDTH ? MINWIDTH : objectEntries2[k][1].toString().length;
+                        }
+                    }
                 }
             }
         }
     }
 
+    // adjust column widths near best possible fit 
+    colWidths.Locatie -= colWidths.Locatie / 5;
+    colWidths.Artikelomschrijving -= colWidths.Artikelomschrijving / 5;
+    colWidths.Artikelcode += 2;
+
     return {
         maxBatchesFound: maxBatchesFound,
-        articles: mismatchingRows
+        articles: rowsToOutput,
+        colWidths: colWidths
     }
 }
 
 // merge inventories of two files and initiate download of file with merged inventory
-export async function generateMergedFile(file1, file2) {
+export async function mergeFiles(file1, file2) {
 
+    // // different way to handle the async file reading
     // convertExcelToJSON(file1)
     // .then(data => console.log(data))
     // .catch(error => console.log(error));
 
     // converteer elke file naar een array van objects (excel-rows)
-    const rowObjects1 = await utils.convertExcelToArrayOfObjects(file1);
-    const rowObjects2 = await utils.convertExcelToArrayOfObjects(file2);
+    const rowObjects1 = await convertExcelToArrayOfObjects(file1);
+    const rowObjects2 = await convertExcelToArrayOfObjects(file2);
+
 
     // slaag de lengte van beide arrays op als 'primitive-value' voor optimalisatie-redenen
     const L1 = rowObjects1.length;
     const L2 = rowObjects2.length;
+    
 
     // voeg voor al de artikelen in beide files de ontbrekende artikel-locatie toe (waar mogelijk)
     for (let i = 0; i < L1; i++) {
         if (!Object.keys(rowObjects1[i]).includes('Locatie') && !Object.keys(rowObjects1[i]).includes('locatie')) {
-            rowObjects1[i].Locatie = utils.guessLocation(rowObjects1, i);
+            rowObjects1[i].Locatie = guessLocation(rowObjects1, i);
         }
     }
     for (let i = 0; i < L2; i++) {
         if (!Object.keys(rowObjects2[i]).includes('Locatie') && !Object.keys(rowObjects2[i]).includes('locatie')) {
-            rowObjects2[i].Locatie = utils.guessLocation(rowObjects2, i);
+            rowObjects2[i].Locatie = guessLocation(rowObjects2, i);
         }
     }
-
-    // check of er in de 2de file artikelen zijn die in de 1ste file ook voorkomen. 
-    // Zo ja, voeg de 'aantal/datum'-paren van het artikel in de 2de file toe aan die van het artikel in de 1ste file
-    // let quantAndDatePairs1 = [], quantAndDatePairs2 = [];
+    
+    // initialise a variable to store the max number of batches from all articles
+    let maxBatchesFound = 0;
 
     // 'merge' the data from the articles that are present in both files
     for (let i = 0; i < L1; i++) {
 
         const artikelcode1 = rowObjects1[i].Artikelcode;
-        const quantAndDatePairs1 = utils.getQuantityDatePairs(rowObjects1[i]);
+        const quantAndDatePairs1 = getQuantityDatePairs(rowObjects1[i]);
 
         for (let j = 0; j < rowObjects2.length; j++) {
-            const quantAndDatePairs2 = utils.getQuantityDatePairs(rowObjects2[j]);
+            const quantAndDatePairs2 = getQuantityDatePairs(rowObjects2[j]);
 
             // format dates of artikel in file2
             for (let pairNr = 0; pairNr < quantAndDatePairs2.length; pairNr++) {
@@ -192,8 +241,8 @@ export async function generateMergedFile(file1, file2) {
                         if (quantAndDatePairs1) {
                             for (let pair of quantAndDatePairs1) {
                                 if (pair[1] === pairToHandle[1]) {
-                                    dateMatchFound = true;
                                     pair[0] += pairToHandle[0];
+                                    dateMatchFound = true;
                                 }
                             }
                         }
@@ -203,8 +252,12 @@ export async function generateMergedFile(file1, file2) {
                     }
                 }
 
+                // update maxBatchesFound if needed
+                if (quantAndDatePairs1.length > maxBatchesFound) maxBatchesFound = quantAndDatePairs1.length;
+
+                // sort pairs (if any) by date
                 if (quantAndDatePairs1.length > 0) {
-                    // sort pairs by date
+                    
                     quantAndDatePairs1.sort((a, b) => {
 
                         // sort pairs with a non-specified date after pairs that do have a specified date
@@ -237,23 +290,54 @@ export async function generateMergedFile(file1, file2) {
                     }
                 }
 
-                // verwijder artikel uit file2, zodat in file2 enkel de artikelen (die niet vernoemd zijn in file1) overblijven 
+                // remove article object from file2, so in the end -> only articles unique to file2 will 'remain' in file2
                 rowObjects2.splice(j, 1);
                 j--;
             } 
         }
 
         // get rid of unnecessary '/'es in batch quantity and date fields, so they won't get rendered in file
-        utils.clearInvalidQuantityCells(rowObjects1[i]); 
+        clearInvalidQuantityCells(rowObjects1[i]); 
     }
 
     // add the articles which are only present in file2, to file1
     for (let artikel of rowObjects2) {
+
+        // update maxBatchesFound if needed
+        const pairsAmount = getQuantityDatePairs(artikel).length;
+        if (pairsAmount > maxBatchesFound) maxBatchesFound = pairsAmount;
+
         if (!artikel.Locatie) artikel.Locatie = '?';
         rowObjects1.push(artikel);
     }
 
-    return rowObjects1
+    // compute the max-width for each column
+    let colWidths = {};
+    const MINWIDTH = 6;
+    for (let articleNr = 0; articleNr < rowObjects1.length; articleNr++) {
+        // get key/value pairs
+        let objectEntries = Object.entries(rowObjects1[articleNr]);
+        for (let k = 0; k < objectEntries.length; k++) {
+            if (objectEntries[k][0] in colWidths) {
+                if (colWidths[objectEntries[k][0]] < objectEntries[k][1].toString().length) {
+                    colWidths[objectEntries[k][0]] = objectEntries[k][1].toString().length;
+                }
+            } else {
+                colWidths[objectEntries[k][0]] = objectEntries[k][1].toString().length < MINWIDTH ? MINWIDTH : objectEntries[k][1].toString().length;
+            }
+        }
+    }
+
+    // adjust column widths near best possible fit 
+    colWidths.Locatie -= colWidths.Locatie / 5;
+    colWidths.Artikelomschrijving -= colWidths.Artikelomschrijving / 5;
+    colWidths.Artikelcode += 2;
+
+    return {
+        maxBatchesFound: maxBatchesFound,
+        articles: rowObjects1,
+        colWidths: colWidths
+    }
 }
 //----------------------------------------------------------------------------------------------
 //------------------- helper functions used for working with excel-files ------------------- END

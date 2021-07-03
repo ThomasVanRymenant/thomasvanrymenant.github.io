@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
 }
 
 body {
@@ -14,7 +15,8 @@ body {
     align-items: flex-start;
     height: 100%;
     width: 100%;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    /* font-family: 'Open Sans', sans-serif; */
 }
 
 #app-container {
@@ -28,7 +30,8 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
-    color: rgb(43, 50, 55);
+    /* color: rgb(43, 50, 55); */
+    color: black;
 }
 
 .main-nav {
@@ -52,6 +55,9 @@ body {
     color: rgb(92, 92, 92);
     cursor: pointer;
 }
+.main-nav .option:hover {
+    color: initial;
+}
 .main-nav .option.filter {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -62,10 +68,9 @@ body {
 }
 .main-nav .option.active {
     box-shadow: none;
-    color: inherit;
+    color: initial;
     background: white;
     cursor: initial;
-    font-weight: 600;
 }
 .main-nav .option.filter.active {
     border-bottom-right-radius: none;
@@ -129,15 +134,22 @@ body {
     align-items: center;
     width: 50%;
     height: 35px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     background: rgb(213, 213, 213);
     color: rgb(92, 92, 92);
     cursor: pointer;
+}
+.sub-nav .option:hover {
+    color: initial;
 }
 .sub-nav .option.single {
     border-top-left-radius: 3px;
     border-bottom-right-radius: 3px;
     box-shadow: inset -2px -2px 5px -2px rgba(72, 72, 72, 0.7);
+}
+.sub-nav .option.single:hover { /* temporary style, until (and if) feature is developed */
+    color: rgb(92, 92, 92);
+    cursor: not-allowed;
 }
 .sub-nav .option.multiple {
     border-top-right-radius: 3px;
@@ -153,13 +165,15 @@ body {
     border-top-right-radius: 3px;
 }
 .sub-nav .option.active {
-    font-weight: 600;
+    /* font-weight: 600; */
     box-shadow: none;
-    color: inherit;
+    color: initial;
     background: white;
     cursor: initial;
 }
-
+.option-title {
+    font-size: 1.1rem;
+}
 .btns-container {
     margin-bottom: 1rem;
     display: flex;
@@ -188,39 +202,35 @@ body {
     font-size: 18px;
     align-items: center;
     padding: 15px 10px 30px 10px;
-    /* background: linear-gradient(180deg, rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(237, 237, 237), rgb(200, 200, 200)); */
-    background: none;
+    background: white;
     border-radius: 15px;
-    border: 1px solid rgb(240, 240, 240);
-    border-top-color: rgb(225, 225, 225);
-    border-bottom: none;
+    border-top: 1px solid rgb(205, 205, 205);
 
     margin-bottom: 1.5rem;
     cursor: pointer;
     position: relative;
-    transition: all 0.1s ease-out;
     overflow: hidden;
-    box-shadow: 0px 6px 10px -6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 3px 10px -5px rgba(0, 0, 0, 0.9);
 }
 .file-inputs-container label:hover,
 .file-inputs-container label:focus {
-    border-color:rgb(191, 191, 191);
+    border: 1px solid rgb(191, 191, 191);
+    border-bottom: none;
 }
 .file-inputs-container label:active {
-    box-shadow: inset 0px 4px 13px -6px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0px 1px 13px -6px rgba(0, 0, 0, 0.9);
     border-color: white;
 }
 .file-inputs-container label .info {
-    color: rgb(147, 147, 147);
-    font-size: 15px;
+    /* color: rgb(147, 147, 147); */
+    font-weight: 300;
+    /* font-size: 15px; */
+    font-size: 0.98rem;
 }
 .file-inputs-container label .icon {
     margin-top: 14px;
     margin-bottom: 10px;
     height: 80px;
-}
-.file-inputs-container label svg path {
-    transition: all 0.1s ease-out;
 }
 .file-inputs-container label svg .darkgreen {
     fill:#2f7f6d;
@@ -230,42 +240,43 @@ body {
 }
 .file-inputs-container label:hover svg .darkgreen,
 .file-inputs-container label:active svg .darkgreen {
-    fill:#296f5f;
+    fill:#235f52;
 }
 .file-inputs-container label:hover svg .lightgreen,
 .file-inputs-container label:active svg .lightgreen {
-    fill:#358f7a;
+    fill:#2f7f6d;
 }
 /* @keyframes bounce1 {
-    0% { bottom: 90px; opacity: 0;}
-    10% { bottom: 90px; opacity: 0;}
+    0% { bottom: 70px; opacity: 0;}
+    10% { bottom: 70px; opacity: 0;}
     20% { opacity: 0.5;} 
-    30% { bottom: 20px; opacity: 1;} 
-    40% { bottom: 36px; }
-    50% { bottom: 45px; } 
-    70% { bottom: 20px; } 
-    80% { bottom: 26px; }
-    100% { bottom: 20px; opacity: 1;}
+    30% { bottom: 0px; opacity: 1;} 
+    40% { bottom: 16px; }
+    50% { bottom: 25px; } 
+    70% { bottom: 0px; } 
+    80% { bottom: 6px; }
+    100% { bottom: 0px; opacity: 1;}
 } */
 @keyframes bounce2 {
-    0% {bottom: -45px; height: 0px; opacity: 1;}
-    40% {color: transparent;}
-    60% {bottom: 0px; height: 30px;}
-    100% {bottom: 0px; height: 20px; opacity: 1;}
+    0% {bottom: -45px; height: 0px; opacity: 1; color: transparent;}
+    60% {bottom: 0px; height: 35px;}
+    100% {bottom: 0px; height: 25px; opacity: 1; color: black;}
 }
 .file-inputs-container label .file-name-field-1,
 .file-inputs-container label .file-name-field-2 {
     overflow: hidden;
     text-align: center;
+    /* font-size: 0.9rem; */
     font-size: 0.9rem;
+    font-weight: 400;
     border-top:1px solid rgba(47, 127, 110, 0.5);
     position: absolute;
     bottom: 0px;
     background: rgba(47, 127, 109, 0.15);
     color: black;
-    height: 20px;
+    height: 25px;
     width: 100%;
-    padding: 0px 8px 1px 8px;
+    padding: 0px 8px 0px 8px;
     opacity: 0;
     animation-name: bounce2;
     animation-duration: 0.6s;
@@ -277,17 +288,6 @@ body {
     animation-play-state: paused;
     transition: all 0.1s ease-out;
 }
-.file-inputs-container label:hover .file-name-field-1,
-.file-inputs-container label:hover .file-name-field-2 {
-    border-color: #2f7f6d;
-    background: #2f7f6d;
-    color: white;
-}
-/* .file-inputs-container label:active .file-name-field-1,
-.file-inputs-container label:active .file-name-field-2 {
-    background: initial;
-    color: inherit;
-} */
 
 .file-inputs-container input {
     opacity: 0;
@@ -301,9 +301,10 @@ body {
     border-color:rgb(84, 84, 84); 
 }
 .btn {
+    font-family: inherit;
     font-size: 1rem;
     color: white;
-    font-weight: 500;
+    font-weight: 600;
     padding: 9px 20px;
     word-spacing: 3px;
     background: linear-gradient(180deg, rgb(59, 159, 136), rgb(59, 159, 136), rgb(47, 127, 109));
@@ -313,7 +314,7 @@ body {
     cursor: pointer;
 }
 .btn:hover {
-    background: linear-gradient(180deg, rgb(53, 143, 122), rgb(53, 143, 122), rgb(41, 111, 95));
+    background: linear-gradient(180deg, #2f7f6d, #2f7f6d, #235f52);
 }
 .btn:active {
     box-shadow: inset 0px 6px 13px -9px rgb(0, 0, 0);
