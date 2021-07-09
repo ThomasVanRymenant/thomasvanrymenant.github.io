@@ -42,12 +42,12 @@ export function toggleInfoModalContent(modalContainer, contentEl) {
     });
 
     // change header based on which content is getting activated
-    if (contentEl.id = "info-merge") {
+    if (contentEl.id == "info-merge") {
         modalContainer.querySelector('.title').innerHTML = "Uitleg - Merge inventaris uit 2 files"
-    } else if (contentEl.id = "info-compare-multiple") {
+    } else if (contentEl.id == "info-compare-multiple") {
         modalContainer.querySelector('.title').innerHTML = "Uitleg - Vergelijk getelde inventaris met inventaris uit exactonline"
     } else {
-        console.error("bug detected")
+        console.error("bug detected in function toggleInfoModalContent(modalContainer, contentEl)")
     }
     contentEl.classList.add('active');;
 } 
@@ -67,13 +67,14 @@ export function toggleInfoModalContent(modalContainer, contentEl) {
 // }
 
 // function that returns a (sparse) array of article-objects that represent each article's mismatch 
-// and it's non-identical (hence mismatching) represenation in the second inputted file
+// and it's non-identical (hence mismatching) represenation from the second inputted file
+// for each mismatch, the following objects will be included in the outputted array-of-objects:
+// article-object from the "counted inventory"-file, equivalent but mismatching article-object from the "exactonlie"-file, and an empty object (to include an empty row in the output-FILE)
 export async function extractMismatchesFromFiles(file1, file2) {
 
-    // initialise an array to store all the mismatching inventories in
     const rowsToOutput = [];
 
-    let maxBatchesFound = 0; // tracker for the -most amount of batches- found in any of the articles
+    let maxBatchesFound = 0; // tracker for the -most amount of batches- found in an article
     let colWidths = {};
 
     // convert every file to an array of objects (excel-rows)
