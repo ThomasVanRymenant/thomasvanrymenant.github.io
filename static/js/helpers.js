@@ -36,6 +36,22 @@ export function switchActiveButton(newActiveBtn) {
 
 };
 
+export function toggleInfoModalContent(modalContainer, contentEl) {
+    modalContainer.querySelectorAll('.content').forEach(el=>{
+        el.classList.remove('active');
+    });
+
+    // change header based on which content is getting activated
+    if (contentEl.id = "info-merge") {
+        modalContainer.querySelector('.title').innerHTML = "Uitleg - Merge inventaris uit 2 files"
+    } else if (contentEl.id = "info-compare-multiple") {
+        modalContainer.querySelector('.title').innerHTML = "Uitleg - Vergelijk getelde inventaris met inventaris uit exactonline"
+    } else {
+        console.error("bug detected")
+    }
+    contentEl.classList.add('active');;
+} 
+
 //-------------------------------------------------------------------------------------------------------
 //------------------- helper functions used in navigation-related event-callbacks ------------------- END 
 //-------------------------------------------------------------------------------------------------------

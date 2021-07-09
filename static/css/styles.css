@@ -179,7 +179,7 @@ body {
 
 
 
-
+/* Modal styling start */
 .modal-container { /* background for modals */
     background: rgba(0, 0, 0, 0.4);
     position: fixed;
@@ -187,17 +187,30 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
-    display: none;
+    /* display: none; */
+    display: flex;
+    opacity: 0;
     justify-content: center;
     align-items: center;
+    z-index: -1;
 }
 .modal-container.active {
-    display: flex;
+    /* display: flex; */
+    opacity: 1;
+    z-index: 5;
+}
+.modal-container.active .modal {
+    transform: scale(1);
 }
 .modal {
     position: relative;
     display: flex;
     flex-direction: column;
+
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 
     min-height: 500px;
     max-height: 92vh;
@@ -205,12 +218,16 @@ body {
     min-width: 600px;
     width: 100%;
     max-width: 950px;
-
+    
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
+
+    transform: scale(0);
+    transition: all 0.2s ease-out;
+
+    background: white;
+    overflow: hidden;
 }
 .modal .header {
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
     width: 100%;
     height: 30px;
     background: rgb(32, 94, 81);
@@ -219,7 +236,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
+    /* position: sticky; */
 }
 .modal .header .title {
     font-size: 14px;
@@ -244,7 +261,6 @@ body {
     transition: all 0.1s ease;
 }
 .cross-wrapper:hover {
-    /* background: rgb(232, 230, 230); */
     background: rgb(172, 213, 204);
 }
 .cross-wrapper:hover svg {
@@ -254,11 +270,8 @@ body {
 
 .modal .body {
     background: white;
-    height: 100%;
+    height: calc(100% - 30px);
     padding: 10px 20px 20px 35px;
-
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
 
     overflow-x: hidden;
     overflow-y: auto;
@@ -269,7 +282,13 @@ body {
 .modal .body .content.active {
     display: block;
 }
-
+/* Modal styling end */
+/* info-modal styling start */
+.modal .content img {
+    /* border: 1px solid rgb(201, 201, 201); */
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
+}
+/* info-modal styling end */
 
 
 

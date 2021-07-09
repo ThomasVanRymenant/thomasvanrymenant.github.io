@@ -1,4 +1,4 @@
-import {extractMismatchesFromFiles, mergeFiles} from './helpers.js';
+import {extractMismatchesFromFiles, mergeFiles, toggleInfoModalContent} from './helpers.js';
 import {resetAnimationOnEl} from './utils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             labels[1].querySelector(".info").innerHTML = 'inventaris volgens database';
             switchActiveNavOption();
             switchActiveButton(document.querySelector('.btn.filter'));
+            toggleInfoModalContent(document.getElementById('info-modal-container'), document.getElementById('info-modal-container').querySelector('#info-compare-multiple'));
         }
 
     });
@@ -66,22 +67,36 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.sub-nav').classList.remove('active');
             document.getElementById('app-body').style.borderTopLeftRadius = '5px';
             document.querySelector('.sub-nav-replacer').classList.add('active');
+
             let labels = document.querySelector('.file-inputs-container').querySelectorAll('label');
             labels[0].querySelector(".info").innerHTML = '';
             labels[1].querySelector(".info").innerHTML = '';
             switchActiveNavOption();
             switchActiveButton(document.querySelector('.btn.merge'));
-            const modalContainer = document.getElementById('info-modal-container');
-            modalContainer.querySelectorAll('.content').forEach(el=>{
-                el.classList.remove('active');
-            });
-            modalContainer.querySelector('#info-merge').classList.add('active');
-            modalContainer.querySelector('.title').innerHTML = "Uitleg - Voeg 2 files met inventarissen samen in 1 file";
+            toggleInfoModalContent(document.getElementById('info-modal-container'), document.getElementById('info-modal-container').querySelector('#info-merge'));
         }
 
     });
 
     // sub navigation functionality
+    
+    document.getElementById('option-multiple').addEventListener('click', (e) => {
+
+        console.log('code runs1');
+        e.stopPropagation();
+        if (!e.target.classList.contains('active')) {
+            console.log('code runs2');
+            let labels = document.querySelector('.file-inputs-container').querySelectorAll('label');
+            labels[0].querySelector(".info").innerHTML = 'getelde inventaris';
+            labels[1].querySelector(".info").innerHTML = 'inventaris volgens database';
+
+            switchActiveButton(document.querySelector('.btn.filter'));
+            document.getElementById('option-single').classList.remove('active');
+            e.target.classList.add('active');
+            toggleInfoModalContent(document.getElementById('info-modal-container'), document.getElementById('info-modal-container').querySelector('#info-compare-multiple'));
+        }
+
+    });
     document.getElementById('option-single').addEventListener('click', (e) => {
 
         e.stopPropagation(); // stop event from bubbling up the DOM
@@ -98,25 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // switchActiveButton(document.querySelector('.btn.check-manual'));
             // document.getElementById('option-multiple').classList.remove('active');
             // e.target.classList.add('active');
-        }
-
-    });
-    document.getElementById('option-multiple').addEventListener('click', (e) => {
-
-        e.stopPropagation();
-        if (!e.target.classList.contains('active')) {
-            let labels = document.querySelector('.file-inputs-container').querySelectorAll('label');
-            labels[0].querySelector(".info").innerHTML = 'getelde inventaris';
-            labels[1].querySelector(".info").innerHTML = 'inventaris volgens database';
-            switchActiveButton(document.querySelector('.btn.filter'));
-            document.getElementById('option-single').classList.remove('active');
-            e.target.classList.add('active');
-            const modalContainer = document.getElementById('info-modal-container');
-            modalContainer.querySelectorAll('.content').forEach(el=>{
-                el.classList.remove('active');
-            });
-            modalContainer.getElementById('info-compare-multiple').classList.add('active');
-            modalContainer.querySelector('.title').innerHTML = "Uitleg - Vergelijk getelde inventaris met inventaris uit exactonline";
         }
 
     });
