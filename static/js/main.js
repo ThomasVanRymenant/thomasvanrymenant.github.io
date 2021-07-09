@@ -71,6 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
             labels[1].querySelector(".info").innerHTML = '';
             switchActiveNavOption();
             switchActiveButton(document.querySelector('.btn.merge'));
+            const modalContainer = document.getElementById('info-modal-container');
+            modalContainer.querySelectorAll('.content').forEach(el=>{
+                el.classList.remove('active');
+            });
+            modalContainer.querySelector('#info-merge').classList.add('active');
+            modalContainer.querySelector('.title').innerHTML = "Uitleg - Voeg 2 files met inventarissen samen in 1 file";
         }
 
     });
@@ -105,9 +111,32 @@ document.addEventListener('DOMContentLoaded', () => {
             switchActiveButton(document.querySelector('.btn.filter'));
             document.getElementById('option-single').classList.remove('active');
             e.target.classList.add('active');
+            const modalContainer = document.getElementById('info-modal-container');
+            modalContainer.querySelectorAll('.content').forEach(el=>{
+                el.classList.remove('active');
+            });
+            modalContainer.getElementById('info-compare-multiple').classList.add('active');
+            modalContainer.querySelector('.title').innerHTML = "Uitleg - Vergelijk getelde inventaris met inventaris uit exactonline";
         }
 
     });
+
+    // modal functionality
+    document.querySelector('.info-icon-wrapper').addEventListener('click', () => {
+        // open info-modal
+        document.getElementById('info-modal-container').classList.add('active')
+    });
+    document.getElementById('modal-closeBtn').addEventListener('click', () => {
+        // open info-modal
+        document.getElementById('info-modal-container').classList.remove('active')
+    });
+    document.getElementById('info-modal-container').addEventListener('click', (e) => {
+        // open info-modal
+        if (e.target.classList.contains('modal-container')) {
+            document.getElementById('info-modal-container').classList.remove('active');
+        }
+    });
+    
     
     // on click of the merge-button, merge files and automatically download the resulting file
     document.getElementById('mergeFilesBtn').addEventListener('click', () => {

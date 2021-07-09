@@ -93,6 +93,7 @@ body {
 }
 
 #app-body {
+    position: relative;
     width: 100%;
     padding: 2.8rem 0px;
     display: flex;
@@ -174,6 +175,142 @@ body {
 .option-title {
     font-size: 1.1rem;
 }
+
+
+
+
+
+.modal-container { /* background for modals */
+    background: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.modal-container.active {
+    display: flex;
+}
+.modal {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    min-height: 500px;
+    max-height: 92vh;
+
+    min-width: 600px;
+    width: 100%;
+    max-width: 950px;
+
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
+}
+.modal .header {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    width: 100%;
+    height: 30px;
+    background: rgb(32, 94, 81);
+    color: white;
+    padding: 5px 0px 5px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+}
+.modal .header .title {
+    font-size: 14px;
+}
+
+.modal .cross-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background: rgb(32, 94, 81);
+    border-top-right-radius: 3px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+.cross-wrapper svg {
+    height: 26px;
+    width: 26px;
+    fill: white;
+    transform: scale(0.75);
+    transition: all 0.1s ease;
+}
+.cross-wrapper:hover {
+    /* background: rgb(232, 230, 230); */
+    background: rgb(172, 213, 204);
+}
+.cross-wrapper:hover svg {
+    transform: scale(1);
+    fill: rgb(244, 0, 0);
+}
+
+.modal .body {
+    background: white;
+    height: 100%;
+    padding: 10px 20px 20px 35px;
+
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.modal .body .content {
+    display: none;
+}
+.modal .body .content.active {
+    display: block;
+}
+
+
+
+
+.info-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: transparent;
+
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: all 0.1s ease-out;
+}
+.info-icon-wrapper:hover {
+    background: rgb(59, 159, 136);
+}
+.info-icon-wrapper:active {
+    background: rgb(40, 109, 94);
+}
+
+.info-icon {
+    width: 26px;
+    height: 26px;
+}
+.info-icon .color {
+    fill: rgb(120, 120, 120);
+    transition: all 0.1s ease-out;
+}
+.info-icon-wrapper:hover .info-icon .color {
+    fill: white;
+}
+
+
+
+
 .btns-container {
     margin-bottom: 1rem;
     display: flex;
