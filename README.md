@@ -1,2 +1,2 @@
 # thomasvanrymenant.github.io
-clinet-side excel spreadsheet automation app
+client-side excel spreadsheet automation app
